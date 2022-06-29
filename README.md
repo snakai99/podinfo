@@ -6,26 +6,39 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/stefanprodan/podinfo)](https://goreportcard.com/report/github.com/stefanprodan/podinfo)
 [![Docker Pulls](https://img.shields.io/docker/pulls/stefanprodan/podinfo)](https://hub.docker.com/r/stefanprodan/podinfo)
 
-Podinfo is a tiny web application made with Go that showcases best practices of running microservices in Kubernetes.
+Podinfoは、Kubernetesでマイクロサービスを実行するためのベストプラクティスを紹介する、Goで作られた小さなWebアプリケーションです。
 Podinfo is used by CNCF projects like [Flux](https://github.com/fluxcd/flux2) and [Flagger](https://github.com/fluxcd/flagger)
 for end-to-end testing and workshops.
 
 Specifications:
 
-* Health checks (readiness and liveness)
-* Graceful shutdown on interrupt signals
-* File watcher for secrets and configmaps
-* Instrumented with Prometheus and Open Telemetry
-* Structured logging with zap 
-* 12-factor app with viper
-* Fault injection (random errors and latency)
-* Swagger docs
-* CUE, Helm and Kustomize installers
-* End-to-End testing with Kubernetes Kind and Helm
-* Kustomize testing with GitHub Actions and Open Policy Agent
-* Multi-arch container image with Docker buildx and Github Actions
-* Container image signing with Sigstore cosign
-* CVE scanning with Trivy
+* 健康診断(準備と生活)
+
+*割り込み信号の優雅なシャットダウン
+
+* シークレットとコンフィグマップのファイルウォッチャー
+
+*プロメテウスとオープンテレメトリで計装
+
+* zapによる構造化ロギング
+
+*バイパー付き12ファクターアプリ
+
+* 障害注入(ランダムエラーとレイテンシ)
+
+*スワッガードキュメント
+
+* CUE、Helm、Kustomizeインストーラー
+
+* Kubernetes KindとHelmによるエンドツーエンドのテスト
+
+* GitHub ActionsとOpen Policy AgentによるKustomizeテスト
+
+* Docker buildxとGithubアクションを備えたマルチアーチコンテナイメージ
+
+* Sigstore cosignによるコンテナイメージ署名
+
+* TrivyによるCVEスキャン
 
 Web API:
 
