@@ -42,51 +42,79 @@ Specifications:
 
 Web API:
 
-* `GET /` prints runtime information
-* `GET /version` prints podinfo version and git commit hash 
-* `GET /metrics` return HTTP requests duration and Go runtime metrics
-* `GET /healthz` used by Kubernetes liveness probe
-* `GET /readyz` used by Kubernetes readiness probe
-* `POST /readyz/enable` signals the Kubernetes LB that this instance is ready to receive traffic
-* `POST /readyz/disable` signals the Kubernetes LB to stop sending requests to this instance
-* `GET /status/{code}` returns the status code
-* `GET /panic` crashes the process with exit code 255
-* `POST /echo` forwards the call to the backend service and echos the posted content 
-* `GET /env` returns the environment variables as a JSON array
-* `GET /headers` returns a JSON with the request HTTP headers
-* `GET /delay/{seconds}` waits for the specified period
-* `POST /token` issues a JWT token valid for one minute `JWT=$(curl -sd 'anon' podinfo:9898/token | jq -r .token)`
-* `GET /token/validate` validates the JWT token `curl -H "Authorization: Bearer $JWT" podinfo:9898/token/validate`
-* `GET /configs` returns a JSON with configmaps and/or secrets mounted in the `config` volume
-* `POST/PUT /cache/{key}` saves the posted content to Redis
-* `GET /cache/{key}` returns the content from Redis if the key exists
-* `DELETE /cache/{key}` deletes the key from Redis if exists
-* `POST /store` writes the posted content to disk at /data/hash and returns the SHA1 hash of the content
-* `GET /store/{hash}` returns the content of the file /data/hash if exists
-* `GET /ws/echo` echos content via websockets `podcli ws ws://localhost:9898/ws/echo`
-* `GET /chunked/{seconds}` uses `transfer-encoding` type `chunked` to give a partial response and then waits for the specified period
-* `GET /swagger.json` returns the API Swagger docs, used for Linkerd service profiling and Gloo routes discovery
+* `GET /`はランタイム情報を出力します
+
+* `GET /version`はpodinfoバージョンとgitコミットハッシュを出力します
+
+* `GET /metrics`はHTTPリクエストの期間とGoランタイムメトリクスを返します
+
+* Kubernetesライブネスプローブで使用される「GET /healthz」
+
+* Kubernetes準備プローブで使用される「GET /readyz」
+
+* `POST /readyz/enable`は、このインスタンスがトラフィックを受信する準備ができていることをKubernetes LBに通知します
+
+* `POST /readyz/disable`は、このインスタンスへのリクエストの送信を停止するようにKubernetes LBに通知します
+
+* `GET /status/{code}`はステータスコードを返します
+
+* `GET /panic`は、終了コード255でプロセスをクラッシュさせます
+
+* `POST /echo`はコールをバックエンドサービスに転送し、投稿されたコンテンツをエコーします
+
+* `GET /env`は環境変数をJSON配列として返します
+
+* `GET /headers`は、リクエストHTTPヘッダーを含むJSONを返します
+
+* `GET /delay/{seconds}`は指定された期間を待ちます
+
+* `POST /token`は1分間有効なJWTトークンを発行します `JWT=$(curl -sd 'anon' podinfo:9898/token | jq -r .token)`
+
+* `GET /token/validate`はJWTトークンを検証します `curl -H "Authorization: Bearer $JWT" podinfo:9898/token/validate`
+
+* `GET /configs` は、configmaps および/またはシークレットが `config` ボリュームにマウントされた JSON を返します
+
+* `POST/PUT /cache/{key}`は、投稿されたコンテンツをRedisに保存します
+
+* `GET /cache/{key}`は、キーが存在する場合、Redisからコンテンツを返します
+
+* `DELETE /cache/{key}`は、存在する場合、Redisからキーを削除します
+
+* `POST /store`は、投稿されたコンテンツを/data/hashのディスクに書き込み、コンテンツのSHA1ハッシュを返します
+
+* `GET /store/{hash}`は、存在する場合、ファイル/data/hashの内容を返します
+
+* `GET /ws/echo`はウェブソケットを介してコンテンツをエコーします `podcli ws ws://localhost:9898/ws/echo`
+
+* `GET /chunked/{seconds}` は、`transfer-encoding` タイプ `chunked` を使用して部分的な応答を与え、指定された期間を待ちます
+
+* `GET /swagger.json`は、LinkerdサービスのプロファイリングとGlooルート検出に使用されるAPI Swaggerドキュメントを返します。
 
 gRPC API:
 
-* `/grpc.health.v1.Health/Check` health checking
+* `/grpc.health.v1。ヘルス/チェック ヘルスチェック
 
-Web UI:
+ウェブUI:
 
-![podinfo-ui](https://raw.githubusercontent.com/stefanprodan/podinfo/gh-pages/screens/podinfo-ui-v3.png)
+![Podinfo-ui](https://raw.githubusercontent.com/stefanprodan/podinfo/gh-pages/screens/podinfo-ui-v3.png)
 
-To access the Swagger UI open `<podinfo-host>/swagger/index.html` in a browser.
+Swagger UIにアクセスするには、ブラウザで`<podinfo-host>/swagger/index.html`を開きます。
 
-### Guides
+### ガイド
 
-* [GitOps Progressive Deliver with Flagger, Helm v3 and Linkerd](https://helm.workshop.flagger.dev/intro/)
+* [GitOps Progressive Deliver with Flagger、Helm v3、Linkerd](https://helm.workshop.flagger.dev/intro/)
+
 * [GitOps Progressive Deliver on EKS with Flagger and AppMesh](https://eks.handson.flagger.dev/prerequisites/)
-* [Automated canary deployments with Flagger and Istio](https://medium.com/google-cloud/automated-canary-deployments-with-flagger-and-istio-ac747827f9d1)
-* [Kubernetes autoscaling with Istio metrics](https://medium.com/google-cloud/kubernetes-autoscaling-with-istio-metrics-76442253a45a)
-* [Autoscaling EKS on Fargate with custom metrics](https://aws.amazon.com/blogs/containers/autoscaling-eks-on-fargate-with-custom-metrics/)
-* [Managing Helm releases the GitOps way](https://medium.com/google-cloud/managing-helm-releases-the-gitops-way-207a6ac6ff0e)
-* [Securing EKS Ingress With Contour And Let’s Encrypt The GitOps Way](https://aws.amazon.com/blogs/containers/securing-eks-ingress-contour-lets-encrypt-gitops/)
 
+* [FlaggerとIstioによる自動カナリア展開](https://medium.com/google-cloud/automated-canary-deployments-with-flagger-and-istio-ac747827f9d1)
+
+* [Istioメトリクスを使用したKubernetes自動スケーリング](https://medium.com/google-cloud/kubernetes-autoscaling-with-istio-metrics-76442253a45a)
+
+* [カスタムメトリクスを使用したFargateでのEKSの自動スケーリング](https://aws.amazon.com/blogs/containers/autoscaling-eks-on-fargate-with-custom-metrics/)
+
+* [ヘルムの管理はGitOpsの方法をリリース](https://medium.com/google-cloud/managing-helm-releases-the-gitops-way-207a6ac6ff0e)
+
+* [ContourでEKS入力を保護し、GitOpsの方法を暗号化しましょう](https://aws.amazon.com/blogs/containers/securing-eks-ingress-contour-lets-encrypt-gitops/)
 ### Install
 
 #### Helm
